@@ -1,7 +1,6 @@
-package com.knoldus.externalservice
+package com.knoldus.externalservice.impl
 
 import com.knoldus.externalservice.api.service.{ExternalService, ExternalUserService}
-import com.knoldus.externalservice.impl.ExternalUserServiceImpl
 import com.lightbend.lagom.scaladsl.api.ServiceLocator
 import com.lightbend.lagom.scaladsl.api.ServiceLocator.NoServiceLocator
 import com.lightbend.lagom.scaladsl.devmode.LagomDevModeComponents

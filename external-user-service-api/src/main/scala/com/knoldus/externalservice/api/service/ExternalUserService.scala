@@ -1,9 +1,10 @@
 package com.knoldus.externalservice.api.service
 
 import akka.{Done, NotUsed}
+import com.knoldus.externalservice.api.entities.com.knoldus.externalservice.api.entities.UserData
+import com.knoldus.externalservice.api.entities.{ExternalServiceUserInformation, User}
 import com.lightbend.lagom.scaladsl.api.transport.Method
 import com.lightbend.lagom.scaladsl.api.{Descriptor, Service, ServiceCall}
-import com.knoldus.entities.{User, UserData, UserInformation}
 
 trait ExternalUserService extends Service {
 
@@ -15,7 +16,7 @@ trait ExternalUserService extends Service {
 
   def deleteUser(id: Int): ServiceCall[NotUsed, String]
 
-  def testExternalService(): ServiceCall[NotUsed, UserInformation]
+  def testExternalService(): ServiceCall[NotUsed, ExternalServiceUserInformation]
 
   override final def descriptor: Descriptor = {
     import Service._
@@ -24,8 +25,8 @@ trait ExternalUserService extends Service {
         restCall(Method.POST, "/api/createUser", createUser _),
         restCall(Method.GET, "/api/getUser/:id", getUserDetails _),
         restCall(Method.PUT, "/api/updateUser/:id", updateUser _),
-        restCall(Method.DELETE,"/api/deleteUser/:id", deleteUser _),
-        pathCall("/api/user",testExternalService _)
+        restCall(Method.DELETE, "/api/deleteUser/:id", deleteUser _),
+        pathCall("/api/user", testExternalService _)
       )
       .withAutoAcl(true)
   }

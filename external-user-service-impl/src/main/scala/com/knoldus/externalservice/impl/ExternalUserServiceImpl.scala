@@ -13,6 +13,10 @@ class ExternalUserServiceImpl(externalService: ExternalService)(implicit ec: Exe
 
   val userList = new ListBuffer[User]
 
+  /**
+    * adds a user to the list
+    * @return Done
+    */
   override def createUser(): ServiceCall[User, Done] = ServiceCall {
     request =>
       val user = new User(request.id, request.name, request.salary)
@@ -25,6 +29,11 @@ class ExternalUserServiceImpl(externalService: ExternalService)(implicit ec: Exe
       }
   }
 
+  /**
+    * gets details of a user
+    * @param id: Integer id of a user
+    * @return User: details of user
+    */
   override def getUserDetails(id: Int): ServiceCall[NotUsed, User] = ServiceCall {
     _ =>
       val user = userList.find(user => user.id == id)
@@ -34,6 +43,11 @@ class ExternalUserServiceImpl(externalService: ExternalService)(implicit ec: Exe
       }
   }
 
+  /**
+    * updates the details of a user
+    * @param id : Integer id of a user
+    * @return String of updated user list
+    */
   override def updateUser(id: Int): ServiceCall[UserData, String] = ServiceCall {
     request =>
       val userExists = userList.find(user => user.id == id)
@@ -47,6 +61,11 @@ class ExternalUserServiceImpl(externalService: ExternalService)(implicit ec: Exe
       }
   }
 
+  /**
+    * deletes a particular user from list
+    * @param id : Integer id of a user
+    * @return String of updated user list after deletion
+    */
   override def deleteUser(id: Int): ServiceCall[NotUsed, String] = ServiceCall {
     _ =>
       val user = userList.find(user => user.id == id)
@@ -59,6 +78,10 @@ class ExternalUserServiceImpl(externalService: ExternalService)(implicit ec: Exe
       }
   }
 
+  /**
+    * tests the external unmanaged service and gets data
+    * @return data from the unmanaged service
+    */
   override def testExternalService(): ServiceCall[NotUsed, ExternalServiceUserInformation] = ServiceCall {
     _ =>
       val result = externalService.getUser().invoke()
